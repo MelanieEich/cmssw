@@ -459,6 +459,7 @@ AdaptiveVertexFitter::weightTracks(
   #ifdef STORE_WEIGHTS
   iter++;
   #endif
+
   for(vector<RefCountedLinearizedTrackState>::const_iterator i
         = lTracks.begin(); i != lTracks.end(); i++)
   {

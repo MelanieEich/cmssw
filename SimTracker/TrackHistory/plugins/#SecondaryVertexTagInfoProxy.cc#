@@ -54,7 +54,10 @@ void SecondaryVertexTagInfoProxy::produce(edm::StreamID, edm::Event& event, cons
 
     // Auto pointers to the collection to be added to the event
     std::unique_ptr<reco::VertexCollection> proxy (new reco::VertexCollection);
-    auto assoc = std::make_unique<AssocSVTagInfoVertex>(&event.productGetter());
+
+
+
+ex    auto assoc = std::make_unique<AssocSVTagInfoVertex>(&event.productGetter());
 
     // Get a reference before to put in the event
     reco::VertexRefProd vertexRefProd = event.getRefBeforePut<reco::VertexCollection>();
