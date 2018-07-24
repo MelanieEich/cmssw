@@ -34,8 +34,7 @@ process.source = cms.Source ("PoolSource",
 
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag.globaltag = '94X_mc2017_realistic_forppRef5TeV'
-#process.GlobalTag.globaltag = '94X_mc2017_realistic_v10'
+process.GlobalTag.globaltag = '94X_mc2017_realistic_v14'
 #process.GlobalTag = GlobalTag(process.GlobalTag, "auto:run2_mc")
 
 process.load("TrackingTools.MaterialEffects.RungeKuttaTrackerPropagator_cfi")

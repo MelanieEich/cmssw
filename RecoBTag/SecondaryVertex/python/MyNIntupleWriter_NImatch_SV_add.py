@@ -88,12 +88,14 @@ process.vertexHistoryAnalyzer = cms.EDAnalyzer("VertexHistoryAnalyzer",
 # source for TTbar Spring2018 sample
 process.source = cms.Source ("PoolSource",
     fileNames=cms.untracked.vstring(
-        'file:////pnfs/desy.de/cms/tier2/store/user/meich/NI_identification/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TM_vertex/180712_124433/0000/vertex_TTbar18_default_test_few_13.root'
+#        'file:////pnfs/desy.de/cms/tier2/store/user/meich/NI_identification/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TM_vertex/180712_124433/0000/vertex_TTbar18_default_test_few_13.root'
+        'file:////pnfs/desy.de/cms/tier2/store/user/meich/NI_identification/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/TM_vertex/180720_080201/0000/vertex_TTbar18_default_5.root'
     )
 )
 
 process.out = cms.OutputModule("PoolOutputModule",
-    fileName = cms.untracked.string("/nfs/dust/cms/user/eichm/btag/ntuple/all_categ/vertex_TTbar_categ_13.root"),
+#    fileName = cms.untracked.string("/nfs/dust/cms/user/eichm/btag/ntuple/all_categ/vertex_TTbar_categ_13.root"
+    fileName = cms.untracked.string("/nfs/dust/cms/user/eichm/btag/ntuple/all_categ/vertex_QCD_categ_5.root"),
 #    fileName = cms.untracked.string("/store/user/meich/NI_identification/vertex_QCD_default_test.root"),
 #    fileName = cms.untracked.string("vertex_TTbar18_default_test_few_SV.root"),
     outputCommands = cms.untracked.vstring("drop *",
