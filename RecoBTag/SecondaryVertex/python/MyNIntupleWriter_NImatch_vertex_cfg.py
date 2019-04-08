@@ -93,7 +93,6 @@ process.source = cms.Source ("PoolSource",
 #        '/store/mc/RunIIFall17DRPremix/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/GEN-SIM-RECODEBUG/94X_mc2017_realistic_v10-v1/40000/CA84E2A4-4FDC-E711-A204-FA163EC5DEF2.root'
 #        ' /store/mc/RunIIFall17DRPremix/QCD_Pt_800to1000_TuneCP5_13TeV_pythia8/GEN-SIM-RECODEBUG/94X_mc2017_realistic_v10-v1/50000/125C3D2F-68E2-E711-AB6E-E0071B695B81.root'
 #        '/store/mc/RunIIFall17DRPremix/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/GEN-SIM-RECODEBUG/PU2017_94X_mc2017_realistic_v11_ext1-v2/20000/00B8E806-4C5E-E811-9D01-5065F381E182.root'
-#        '/store/mc/RunIIAutumn18DRPremix/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/GEN-SIM-RECODEBUG/PREMIX_RECODEBUG_102X_upgrade2018_realistic_v15-v1/80000/FFFD8811-100B-E14D-8AD2-66F035A774F3.root'
         '/store/mc/RunIIAutumn18DRPremix/QCD_Pt_80to120_TuneCP5_13TeV_pythia8/GEN-SIM-RECODEBUG/PREMIX_RECODEBUG_102X_upgrade2018_realistic_v15-v1/80000/FFFD8811-100B-E14D-8AD2-66F035A774F3.root'
 #        'file:////nfs/dust/cms/user/eichm/btag/data/2018/RunIISpring18DRPremix_TTToHadronic_TuneCP5_13TeV-powheg-pythia8/328CB6C9-B161-E811-883C-A0369FE2C09C.root'
 #        'file:////nfs/dust/cms/user/eichm/btag/ntuple/NITTbar18_test.root'
