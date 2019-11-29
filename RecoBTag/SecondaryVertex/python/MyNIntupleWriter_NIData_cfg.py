@@ -22,7 +22,8 @@ process.source = cms.Source ("PoolSource",
     fileNames=cms.untracked.vstring(
 #        'file:////nfs/dust/cms/user/eichm/btag/data/2018/RunIISpring18DRPremix_TTToHadronic_TuneCP5_13TeV-powheg-pythia8/328CB6C9-B161-E811-883C-A0369FE2C09C.root'
 #        'file:////pnfs/desy.de/cms/tier2/store/data/Run2017B/SingleMuon/MINIAOD/PromptReco-v2/000/299/000/00000/7647626E-2D6A-E711-829C-02163E01A606.root'
-        'file:////pnfs/desy.de/cms/tier2/store/data/Run2016C/SingleMuon/AOD/23Sep2016-v1/80002/8CEDE132-C78A-E611-962D-002590D9D980.root'
+#        'file:////pnfs/desy.de/cms/tier2/store/data/Run2016C/SingleMuon/AOD/23Sep2016-v1/80002/8CEDE132-C78A-E611-962D-002590D9D980.root'
+        'file:////pnfs/desy.de/cms/tier2/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/70008/0689C2B4-37D8-E711-ACAF-02163E01A208.root'
     )
 )
 
@@ -188,6 +189,10 @@ process.out = cms.OutputModule("PoolOutputModule",
                         "keep *_offlineSlimmedPrimaryVertices_*_*",
                         "keep *_offlinePrimaryVertices_*_*",
                         "keep *_inclusiveCandidateSecondaryVertices_*_*",
+                        "keep *_particleFlowDisplacedVertex_*_*",
+                        "keep *_*Track*_*_*",
+                        "keep *_*Vertex*_*_*",
+                        "keep *_*Vertices*_*_*",
                         "keep *_mix_MergedTrackTruth_*")
 )
 

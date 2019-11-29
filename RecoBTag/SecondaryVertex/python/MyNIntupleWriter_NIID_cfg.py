@@ -16,7 +16,7 @@ from RecoBTag.SecondaryVertex.trackRefitter_cfi import *
 processName = "RECODEBUG"
 process = cms.Process(processName)
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 process.source = cms.Source ("PoolSource",
     fileNames=cms.untracked.vstring(
@@ -181,7 +181,7 @@ process.out = cms.OutputModule("PoolOutputModule",
 #    fileName = cms.untracked.string("/nfs/dust/cms/user/eichm/btag/ntuple/vertex_QCD_170to300_3.root"),
 #    fileName = cms.untracked.string("/store/user/meich/NI_identification/vertex_QCD_default_test.root"),
     fileName = cms.untracked.string("/nfs/dust/cms/user/eichm/btag/ntuple/NITTbar18_test.root"),
-    outputCommands = cms.untracked.vstring("drop *",
+    outputCommands = cms.untracked.vstring("keep *",
                         "keep *_*_*_*")
                         # "keep *_*_*_RECODEBUG",
                         # "keep *_*_*_SIM",

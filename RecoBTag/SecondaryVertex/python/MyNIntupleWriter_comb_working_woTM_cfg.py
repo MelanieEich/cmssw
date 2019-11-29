@@ -2,7 +2,8 @@ import FWCore.ParameterSet.Config as cms
 
 from RecoBTag.SecondaryVertex.nuclearInteractionIdentifier_cfi import *
 from RecoBTag.SecondaryVertex.vertexAndTracksCleaner_cfi import *
-from RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff import *
+#from RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff import *
+from RecoVertex.AdaptiveVertexFinder.inclusiveCandidateVertexFinder_cfi import *
 from RecoBTag.SecondaryVertex.trackRefitter_cfi import *
 
 
@@ -20,8 +21,8 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.source = cms.Source ("PoolSource",
     fileNames=cms.untracked.vstring(
-#        'file:////nfs/dust/cms/user/eichm/btag/data/2018/RunIISpring18DRPremix_TTToHadronic_TuneCP5_13TeV-powheg-pythia8/328CB6C9-B161-E811-883C-A0369FE2C09C.root'
-'file:////nfs/dust/cms/user/eichm/btag/ntuple/NITMTTbar18.root'
+        'file:////nfs/dust/cms/user/eichm/btag/data/2018/RunIISpring18DRPremix_TTToHadronic_TuneCP5_13TeV-powheg-pythia8/328CB6C9-B161-E811-883C-A0369FE2C09C.root'
+#'file:////nfs/dust/cms/user/eichm/btag/ntuple/NITMTTbar18.root'
     )
 )
 
@@ -49,7 +50,9 @@ process.load("RecoLocalTracker.SiPixelRecHits.PixelCPEESProducers_cff")
 process.load("RecoTracker.TransientTrackingRecHit.TTRHBuilders_cff")
 
 process.load("RecoBTag.SecondaryVertex.vertexAndTracksCleaner_cfi")
-process.load("RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff")
+process.vertexAndTracksCandCleaned.veto = cms.InputTag('nuclearInteractionCandIdentifier0')
+#process.load("RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff")
+process.load("RecoVertex.AdaptiveVertexFinder.inclusiveCandidateVertexFinder_cfi")
 process.load("RecoBTag.SecondaryVertex.trackRefitter_cfi")
 
 
@@ -127,7 +130,7 @@ process.candidateVertexArbitrator0 = cms.EDProducer("CandidateVertexArbitrator",
     fitterTini = cms.double(256),
     maxTimeSignificance = cms.double(3.5),
     primaryVertices = cms.InputTag("offlinePrimaryVertices"),
-    secondaryVertices = cms.InputTag("candidateVertexMerger"),
+    secondaryVertices = cms.InputTag("candidateVertexMerger0"),
     sigCut = cms.double(5),
     trackMinLayers = cms.int32(4),
     trackMinPixels = cms.int32(1),
@@ -178,29 +181,29 @@ process.TransientTrackBuilderESProducer = cms.ESProducer("TransientTrackBuilderE
     ComponentName = cms.string('TransientTrackBuilder')
 )
 
-process.load("RecoBTag.ImpactParameter.impactParameterTagInfos_cfi")
-process.impactParameterTagInfos.primaryVertex = cms.InputTag("offlinePrimaryVertices")
+process.load("RecoBTag.ImpactParameter.pfImpactParameterTagInfos_cfi")
+process.pfImpactParameterTagInfos.primaryVertex = cms.InputTag("offlinePrimaryVertices")
+process.pfImpactParameterTagInfos.candidates = ("vertexAndTracksCandCleaned0")
 
 # SecondaryVertexProducer using IVF Vertex collection
-process.load("RecoBTag.SecondaryVertex.secondaryVertexTagInfos_cfi")
-process.secondaryVertexTagInfos.extSVCollection = cms.InputTag("vertexRefitted0")
-#process.secondaryVertexTagInfos.extSVCollection = cms.InputTag("inclusiveSecondaryVerticesCleaned0")
-process.secondaryVertexTagInfos.vertexCuts.distVal2dMax = cms.double(99999.9)
-process.secondaryVertexTagInfos.vertexCuts.distSig2dMin = cms.double(-99999.9)
+process.load("RecoBTag.SecondaryVertex.pfInclusiveSecondaryVertexFinderTagInfos_cfi")
+process.pfInclusiveSecondaryVertexFinderTagInfos.extSVCollection = cms.InputTag("inclusiveSecondaryVerticesCleaned0")
+process.pfInclusiveSecondaryVertexFinderTagInfos.vertexCuts.distVal2dMax = cms.double(99999.9)
+process.pfInclusiveSecondaryVertexFinderTagInfos.vertexCuts.distSig2dMin = cms.double(-99999.9)
 process.vertexCutsBlock.vertexCuts.distVal2dMax = cms.double(99999.9)
 process.vertexCutsBlock.vertexCuts.distSig2dMin = cms.double(-99999.9)
-process.secondaryVertexTagInfos.useExternalSV = cms.bool(True)
-process.secondaryVertexTagInfos.useSVClustering = cms.bool(True)
-process.secondaryVertexTagInfos.jetAlgorithm = cms.string("AntiKt")
-process.secondaryVertexTagInfos.rParam = cms.double(0.4)
+process.pfInclusiveSecondaryVertexFinderTagInfos.useExternalSV = cms.bool(True)
+process.pfInclusiveSecondaryVertexFinderTagInfos.useSVClustering = cms.bool(True)
+process.pfInclusiveSecondaryVertexFinderTagInfos.jetAlgorithm = cms.string("AntiKt")
+process.pfInclusiveSecondaryVertexFinderTagInfos.rParam = cms.double(0.4)
 
 process.load("SimTracker.TrackHistory.SecondaryVertexTagInfoProxy_cff")
-process.svTagInfoProxy.svTagInfoProducer = cms.untracked.InputTag("secondaryVertexTagInfos")
+process.svTagInfoProxy.svTagInfoProducer = cms.untracked.InputTag("pfInclusiveSecondaryVertexFinderTagInfos")
 
 process.load("PhysicsTools.UtilAlgos.TFileService_cfi")
 
 process.svTagInfoValidation = cms.EDAnalyzer("SVTagInfoValidationAnalyzer",
-    svTagInfoProducer = cms.untracked.InputTag("secondaryVertexTagInfos"),
+    svTagInfoProducer = cms.untracked.InputTag("pfInclusiveSecondaryVertexFinderTagInfos"),
     bestMatchByMaxValue = cms.untracked.bool(True),
     trackingTruth = cms.untracked.InputTag('mix','MergedTrackTruth'),
     vertexAssociator = cms.untracked.InputTag('vertexAssociatorByTracksByHits'),
@@ -213,7 +216,7 @@ process.svTagInfoValidation = cms.EDAnalyzer("SVTagInfoValidationAnalyzer",
 )
 
 process.svTagInfoValidationNImatch = cms.EDAnalyzer("SVTagInfoValidationNImatchAnalyzer",
-    svTagInfoProducer = cms.untracked.InputTag("secondaryVertexTagInfos"),
+    svTagInfoProducer = cms.untracked.InputTag("pfInclusiveSecondaryVertexFinderTagInfos"),
     secondaryVertices = cms.untracked.InputTag("inclusiveSecondaryVerticesCleaned0"),
 #    secondaryVertices = cms.untracked.InputTag("inclusiveCandidateSecondaryVertices"),
     bestMatchByMaxValue = cms.untracked.bool(True),
@@ -256,9 +259,9 @@ process.out = cms.OutputModule("PoolOutputModule",
 )
 
 
-process.nuclearIdentification = cms.Sequence(
-#process.inclusiveCandidateVertexing * process.nuclearInteractionIdentifier0 * process.vertexRefitted0 * process.nuclearInteractionIdentifierAfterRefit * process.vertexAndTracksCandCleaned0 * process.inclusiveCandidateVertexFinder0 * process.candidateVertexMerger0 *  process.candidateVertexArbitrator0 * process.inclusiveSecondaryVerticesCleaned0 *
- process.tpClusterProducer * process.quickTrackAssociatorByHits* process.trackingParticleRecoTrackAsssociationByHits * process.ak4JetTracksAssociatorAtVertexPF * process.vertexAssociatorByTracksByHits * process.impactParameterTagInfos * process.secondaryVertexTagInfos * process.svTagInfoProxy * process.svTagInfoValidationNImatch)
+process.nuclearIdentification = cms.Sequence(process.inclusiveCandidateVertexFinder * process.nuclearInteractionIdentifier0 * process.vertexRefitted0 * process.nuclearInteractionIdentifierAfterRefit * process.vertexAndTracksCandCleaned0 * process.inclusiveCandidateVertexFinder0 * process.candidateVertexMerger0 *  process.candidateVertexArbitrator0 * process.inclusiveSecondaryVerticesCleaned0 *
+ process.tpClusterProducer * process.quickTrackAssociatorByHits* process.trackingParticleRecoTrackAsssociationByHits * process.ak4JetTracksAssociatorAtVertexPF * process.vertexAssociatorByTracksByHits * process.pfImpactParameterTagInfos * process.pfInclusiveSecondaryVertexFinderTagInfos )
+#* process.svTagInfoProxy * process.svTagInfoValidationNImatch)
 
 process.p = cms.Path(process.nuclearIdentification )
 
